@@ -1,7 +1,8 @@
 {
-  "name": "myapp",
-  "private": true,
-  "version": "0.0.0",
+  "name": "webMuumi",
+  "author": "muumif",
+  "private": false,
+  "version": "2.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
