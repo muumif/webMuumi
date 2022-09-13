@@ -1,159 +1,48 @@
-# sapper-template
+# Svelte + Vite
 
-The default template for setting up a [Sapper](https://github.com/sveltejs/sapper) project. Can use either Rollup or webpack as bundler.
+This template should help get you started developing with Svelte in Vite.
 
-## Please note
+## Recommended IDE Setup
 
-Sapper is no longer being actively developed. You may be interested in using Sapper's succesor, [SvelteKit](https://kit.svelte.dev/) for new projects.
+[VS Code](https://code.visualstudio.com/) + [Svelte](https://marketplace.visualstudio.com/items?itemName=svelte.svelte-vscode).
 
-## Getting started
+## Need an official Svelte framework?
 
-### Using `degit`
+Check out [SvelteKit](https://github.com/sveltejs/kit#readme), which is also powered by Vite. Deploy anywhere with its serverless-first approach and adapt to various platforms, with out of the box support for TypeScript, SCSS, and Less, and easily-added support for mdsvex, GraphQL, PostCSS, Tailwind CSS, and more.
 
-To create a new Sapper project based on Rollup locally, run
+## Technical considerations
 
-```bash
-npx degit "sveltejs/sapper-template#rollup" my-app
-```
+**Why use this over SvelteKit?**
 
-For a webpack-based project, instead run
+- It brings its own routing solution which might not be preferable for some users.
+- It is first and foremost a framework that just happens to use Vite under the hood, not a Vite app.
+  `vite dev` and `vite build` wouldn't work in a SvelteKit environment, for example.
 
-```bash
-npx degit "sveltejs/sapper-template#webpack" my-app
-```
+This template contains as little as possible to get started with Vite + Svelte, while taking into account the developer experience with regards to HMR and intellisense. It demonstrates capabilities on par with the other `create-vite` templates and is a good starting point for beginners dipping their toes into a Vite + Svelte project.
 
-[`degit`](https://github.com/Rich-Harris/degit) is a scaffolding tool that lets you create a directory from a branch in a repository.
+Should you later need the extended capabilities and extensibility provided by SvelteKit, the template has been structured similarly to SvelteKit so that it is easy to migrate.
 
-Replace `my-app` with the path where you wish to create the project.
+**Why `global.d.ts` instead of `compilerOptions.types` inside `jsconfig.json` or `tsconfig.json`?**
 
+Setting `compilerOptions.types` shuts out all other types not explicitly listed in the configuration. Using triple-slash references keeps the default TypeScript setting of accepting type information from the entire workspace, while also adding `svelte` and `vite/client` type information.
 
-### Using GitHub templates
+**Why include `.vscode/extensions.json`?**
 
-Alternatively, you can create the new project as a GitHub repository using GitHub's template feature.
+Other templates indirectly recommend extensions via the README, but this file allows VS Code to prompt the user to install the recommended extension upon opening the project.
 
-Go to either [sapper-template-rollup](https://github.com/sveltejs/sapper-template-rollup) or [sapper-template-webpack](https://github.com/sveltejs/sapper-template-webpack) and click on "Use this template" to create a new project repository initialized by the template.
+**Why enable `checkJs` in the JS template?**
 
+It is likely that most cases of changing variable types in runtime are likely to be accidental, rather than deliberate. This provides advanced typechecking out of the box. Should you like to take advantage of the dynamically-typed nature of JavaScript, it is trivial to change the configuration.
 
-### Running the project
+**Why is HMR not preserving my local component state?**
 
-Once you have created the project, install dependencies and run the project in development mode:
+HMR state preservation comes with a number of gotchas! It has been disabled by default in both `svelte-hmr` and `@sveltejs/vite-plugin-svelte` due to its often surprising behavior. You can read the details [here](https://github.com/rixo/svelte-hmr#svelte-hmr).
 
-```bash
-cd my-app
-npm install # or yarn
-npm run dev
-```
-
-This will start the development server on [localhost:3000](http://localhost:3000). Open it and click around.
-
-You now have a fully functional Sapper project! To get started developing, consult [sapper.svelte.dev](https://sapper.svelte.dev).
-
-### Using TypeScript
-
-By default, the template uses plain JavaScript. If you wish to use TypeScript instead, you need some changes to the project:
-
- * Add `typescript` as well as typings as dependences in `package.json`
- * Configure the bundler to use [`svelte-preprocess`](https://github.com/sveltejs/svelte-preprocess) and transpile the TypeScript code.
- * Add a `tsconfig.json` file
- * Update the project code to TypeScript
-
-The template comes with a script that will perform these changes for you by running
-
-```bash
-node scripts/setupTypeScript.js
-```
-
-`@sapper` dependencies are resolved through `src/node_modules/@sapper`, which is created during the build. You therefore need to run or build the project once to avoid warnings about missing dependencies.
-
-The script does not support webpack at the moment.
-
-## Directory structure
-
-Sapper expects to find two directories in the root of your project —  `src` and `static`.
-
-
-### src
-
-The [src](src) directory contains the entry points for your app — `client.js`, `server.js` and (optionally) a `service-worker.js` — along with a `template.html` file and a `routes` directory.
-
-
-#### src/routes
-
-This is the heart of your Sapper app. There are two kinds of routes — *pages*, and *server routes*.
-
-**Pages** are Svelte components written in `.svelte` files. When a user first visits the application, they will be served a server-rendered version of the route in question, plus some JavaScript that 'hydrates' the page and initialises a client-side router. From that point forward, navigating to other pages is handled entirely on the client for a fast, app-like feel. (Sapper will preload and cache the code for these subsequent pages, so that navigation is instantaneous.)
-
-**Server routes** are modules written in `.js` files, that export functions corresponding to HTTP methods. Each function receives Express `request` and `response` objects as arguments, plus a `next` function. This is useful for creating a JSON API, for example.
-
-There are three simple rules for naming the files that define your routes:
-
-* A file called `src/routes/about.svelte` corresponds to the `/about` route. A file called `src/routes/blog/[slug].svelte` corresponds to the `/blog/:slug` route, in which case `params.slug` is available to the route
-* The file `src/routes/index.svelte` (or `src/routes/index.js`) corresponds to the root of your app. `src/routes/about/index.svelte` is treated the same as `src/routes/about.svelte`.
-* Files and directories with a leading underscore do *not* create routes. This allows you to colocate helper modules and components with the routes that depend on them — for example you could have a file called `src/routes/_helpers/datetime.js` and it would *not* create a `/_helpers/datetime` route.
-
-
-#### src/node_modules/images
-
-Images added to `src/node_modules/images` can be imported into your code using `import 'images/<filename>'`. They will be given a dynamically generated filename containing a hash, allowing for efficient caching and serving the images on a CDN.
-
-See [`index.svelte`](src/routes/index.svelte) for an example.
-
-
-#### src/node_modules/@sapper
-
-This directory is managed by Sapper and generated when building. It contains all the code you import from `@sapper` modules.
-
-
-### static
-
-The [static](static) directory contains static assets that should be served publicly. Files in this directory will be available directly under the root URL, e.g. an `image.jpg` will be available as `/image.jpg`.
-
-The default [service-worker.js](src/service-worker.js) will preload and cache these files, by retrieving a list of `files` from the generated manifest:
+If you have state that's important to retain within a component, consider creating an external store which would not be replaced by HMR.
 
 ```js
-import { files } from '@sapper/service-worker';
+// store.js
+// An extremely simple external store
+import { writable } from 'svelte/store'
+export default writable(0)
 ```
-
-If you have static files you do not want to cache, you should exclude them from this list after importing it (and before passing it to `cache.addAll`).
-
-Static files are served using [sirv](https://github.com/lukeed/sirv).
-
-
-## Bundler configuration
-
-Sapper uses Rollup or webpack to provide code-splitting and dynamic imports, as well as compiling your Svelte components. With webpack, it also provides hot module reloading. As long as you don't do anything daft, you can edit the configuration files to add whatever plugins you'd like.
-
-
-## Production mode and deployment
-
-To start a production version of your app, run `npm run build && npm start`. This will disable live reloading, and activate the appropriate bundler plugins.
-
-You can deploy your application to any environment that supports Node 10 or above. As an example, to deploy to [Vercel Now](https://vercel.com) when using `sapper export`, run these commands:
-
-```bash
-npm install -g vercel
-vercel
-```
-
-If your app can't be exported to a static site, you can use the [vercel-sapper](https://github.com/thgh/vercel-sapper) builder. You can find instructions on how to do so in its [README](https://github.com/thgh/vercel-sapper#basic-usage).
-
-
-## Using external components
-
-When using Svelte components installed from npm, such as [@sveltejs/svelte-virtual-list](https://github.com/sveltejs/svelte-virtual-list), Svelte needs the original component source (rather than any precompiled JavaScript that ships with the component). This allows the component to be rendered server-side, and also keeps your client-side app smaller.
-
-Because of that, it's essential that the bundler doesn't treat the package as an *external dependency*. You can either modify the `external` option under `server` in [rollup.config.js](rollup.config.js) or the `externals` option in [webpack.config.js](webpack.config.js), or simply install the package to `devDependencies` rather than `dependencies`, which will cause it to get bundled (and therefore compiled) with your app:
-
-```bash
-npm install -D @sveltejs/svelte-virtual-list
-```
-
-## Troubleshooting
-
-Using Windows and WSL2? 
-
-If your project lives outside the WSL root directory, [this limitation](https://github.com/microsoft/WSL/issues/4169) is known to cause live-reloading to fail. See [this issue](https://github.com/sveltejs/sapper/issues/1150) for details.
-
-## Bugs and feedback
-
-Sapper is in early development, and may have the odd rough edge here and there. Please be vocal over on the [Sapper issue tracker](https://github.com/sveltejs/sapper/issues).
