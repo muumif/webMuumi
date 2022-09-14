@@ -1,7 +1,6 @@
 <script>
   import Links from "./lib/Links.svelte";
   import Footer from "./lib/Footer.svelte";
-  import Card from "./lib/Card.svelte";
 </script>
 
 <svelte:head>

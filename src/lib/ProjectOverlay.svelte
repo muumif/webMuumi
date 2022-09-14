@@ -88,9 +88,11 @@
         max-width: 32em;
         max-height: calc(100vh - 4em);
         overflow: auto;
-        transform: translate(-50%,-50%);
+        transform: translate(-50%, -50%);
         padding: 1em;
-        border-radius: 0.2em;
+        border-radius: 0.3rem;
+        border-color: #8a8989;
+        border-width: 2px;
         background: #121212;
     }
 

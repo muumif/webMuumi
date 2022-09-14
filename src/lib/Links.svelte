@@ -8,7 +8,7 @@
 <div>
     <a href="https://github.com/muumif" target="_blank">GitHub</a>
     <a href="https://twitter.com/TTV_Muumi" target="_blank">Twitter</a>
-    <a on:click={() => showModal = true}>Projects</a>
+    <a on:click={() => showModal = true} href="#">Projects</a>
     <a href="https://steamcommunity.com/id/muumif/" target="_blank">Steam</a>
     <a href="https://www.twitch.tv/muumif" target="_blank">Twitch</a>
 </div>
