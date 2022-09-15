@@ -1,55 +1,51 @@
 ﻿<script>
-    export let Name, Description, Link, LinkText; // Link as array
-
+  export let Name, Description, GitHubLink, WebsiteLink, OtherLink, OtherText;
 </script>
 
 <div class="projectCard">
-    <span>
-        <p class="projectName">{Name}</p>
-        <p class="projectDesc">{Description}</p>
-        <a href={Link} target="_blank">{LinkText}</a>
-    </span>
+  <span>
+    <p class="projectName">{Name}</p>
+    <p class="projectDesc">{Description}</p>
+    <div class="links">
+      {#if GitHubLink != undefined}
+        <a href={GitHubLink} target="_blank">GitHub</a>
+      {/if}
+      {#if WebsiteLink != undefined}
+        <a href={WebsiteLink} target="_blank">Website</a>
+      {/if}
+      {#if OtherLink != undefined}
+        <a href={OtherLink} target="_blank">{OtherText}</a>
+      {/if}
+    </div>
+  </span>
 </div>
 
 <style>
-    .projectCard {
-        display: block;
-        height: 100%;
-        margin: 1rem;
-        position: relative;
-        width: 90%;
-    }
+  .projectCard {
+    display: block;
+    height: 100%;
+    margin: 1rem;
+    position: relative;
+    width: 90%;
+  }
 
-    .projectName {
-        font-size: 1.125rem;
-        color: #BB86FC;
-        text-decoration: underline;
-    }
+  .projectName {
+    font-size: 1.125rem;
+    color: #bb86fc;
+  }
 
-    .projectDesc {
-        font-size: 1rem;
-        color: #cecece;
-    }
+  .projectDesc {
+    font-size: 1rem;
+    color: #cecece;
+  }
 
-    a {
-        color: #BB86FC;
-        text-decoration: none;
-    }
+  a {
+    color: #bb86fc;
+    padding-right: 1rem;
+  }
 
-    a:after {
-        content: '';
-        position: absolute;
-        width: 12%;
-        transform: scaleX(0);
-        height: 3px;
-        bottom: 0;
-        left: 0;
-        background-color: #8a8989;
-        transform-origin: bottom right;
-        transition: transform 0.25s ease-out;
-    }
-    a:hover:after {
-        transform: scaleX(1);
-        transform-origin: bottom left;
-    }
+  a:hover {
+    color: #e3cdff;
+    text-decoration: underline;
+  }
 </style>
