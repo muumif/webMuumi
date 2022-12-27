@@ -12,7 +12,7 @@
       return;
     }
     if (e.key === "Tab") {
-      // trap focus
+
       const nodes = modal.querySelectorAll("*");
       const tabbable = Array.from(nodes).filter((n) => n.tabIndex >= 0);
 
@@ -42,17 +42,20 @@
 <div class="modal-background" on:click={close} />
 
 <div class="modal" role="dialog" aria-modal="true" bind:this={modal}>
-  <h1 class="text-center text-xl font-bold">Projects</h1>
-  <p class="text-center text-sm">All my public projects!</p>
   <slot name="header" />
-  <hr />
+    <h1 class="text-center text-xl font-bold">Projects</h1>
+    <p class="text-center text-sm pb-3">All my public projects!</p>
+    <hr />
   <slot />
-  <hr />
 
-  <!-- svelte-ignore a11y-autofocus -->
-  <button autofocus on:click={close} class="text-left pt-3 font-bold text-xl"
-    >Close</button
-  >
+
+  <slot name="footer">
+    <hr />
+
+    <button autofocus on:click={close} class="footer-close"
+      >Close</button
+    >
+  </slot>
 </div>
 
 <style>
@@ -110,11 +113,23 @@
   }
 
   button {
-    display: block;
     color: #cf6679;
   }
 
   button:hover {
     color: #de344c;
+  }
+
+  .footer-close {
+    text-align: center;
+    margin: 0 auto;
+    font-weight: bold;
+    font-size: 1.25rem;
+    line-height: 1.75rem;
+    padding-top: 2rem;
+    width:100px; 
+    margin: -20px -50px; 
+    position:relative;
+    left:50%;
   }
 </style>
