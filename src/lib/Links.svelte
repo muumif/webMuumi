@@ -22,9 +22,9 @@
       GitHubLink="https://github.com/muumif/webMuumi"
     />
     <Card
-            Name="mto.muumi.xyz"
-            Description="Website that gets MyAnimeList animes then searches them from osu! api and gets the songs for those animes!"
-            WebsiteLink="https://mto.muumi.xyz"
+      Name="mto.muumi.xyz"
+      Description="Website that gets MyAnimeList animes then searches them from osu! api and gets the songs for those animes!"
+      WebsiteLink="https://mto.muumi.xyz"
     />
     <Card
       Name="Edgy Loba"
@@ -37,6 +37,11 @@
       Name="IT22E-Bot"
       Description="A simple Discord Bot for checking my school timetable also includes a reminder when a lesson starts."
       GitHubLink="https://github.com/muumif/IT-22E-Bot"
+    />
+    <Card
+      Name="KumaRustBot"
+      Description="A Discord bot that notifies through Uptime-Kuma when a service on my home server is down written in rust."
+      GitHubLink="https://github.com/muumif/KumaRustBot"
     />
   </ProjectOverlay>
 {/if}
